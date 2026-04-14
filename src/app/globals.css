@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --nav-h: 4.5rem;
+  --charcoal: #121110;
+  --charcoal-elevated: #1a1917;
+  --cream: #f3ead8;
+  --cream-muted: #c9bfa8;
+  --gold: #c4a24a;
+  --gold-soft: rgba(196, 162, 74, 0.35);
+  --border-subtle: rgba(243, 234, 216, 0.12);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-elevated: var(--charcoal-elevated);
+  --color-cream: var(--cream);
+  --color-cream-muted: var(--cream-muted);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-border-subtle: var(--border-subtle);
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --animate-fade-up: fade-up 0.7s ease-out both;
+  --animate-fade-in: fade-in 0.5s ease-out both;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--charcoal);
+  color: var(--cream);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: rgba(196, 162, 74, 0.35);
+  color: var(--charcoal);
+}
+
+/* Contact page (Figma) — set by `src/app/contact/layout.tsx` */
+.contact-font-sans {
+  font-family: var(--font-contact-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.contact-font-serif {
+  font-family: var(--font-contact-playfair), ui-serif, Georgia, serif;
+}
+
+/* Figma-style home (see `src/app/(figma)/layout.tsx`) */
+.figma-font-sans {
+  font-family: var(--font-figma-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.figma-font-serif {
+  font-family: var(--font-figma-playfair), ui-serif, Georgia, serif;
+}
+
+/* Services page (see `src/app/services/layout.tsx`) */
+.services-font-sans {
+  font-family: var(--font-services-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.services-font-serif {
+  font-family: var(--font-services-playfair), ui-serif, Georgia, serif;
 }
