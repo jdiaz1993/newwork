@@ -26,6 +26,7 @@ export function ContactStudio() {
       const data = (await res.json().catch(() => ({}))) as {
         ok?: boolean;
         error?: string;
+        message?: string;
         detail?: string;
         hint?: string;
       };
@@ -33,7 +34,8 @@ export function ContactStudio() {
       if (!res.ok) {
         if (res.status === 503 && data.error === "not_configured") {
           setErrorHint(
-            "Email is not configured on the server yet. Add RESEND_API_KEY and CONTACT_TO_EMAIL to .env.local (see .env.example), then restart the dev server.",
+            data.message ??
+              "Email is not configured on the server yet. Add RESEND_API_KEY and CONTACT_TO_EMAIL to .env.local (see .env.example), then restart the dev server.",
           );
         } else if (data.error === "send_failed") {
           const parts = [

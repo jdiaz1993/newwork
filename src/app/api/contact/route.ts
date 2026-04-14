@@ -84,7 +84,12 @@ export async function POST(request: Request) {
       "[contact] Set RESEND_API_KEY and CONTACT_TO_EMAIL in .env.local (see .env.example).",
     );
     return NextResponse.json(
-      { ok: false, error: "not_configured" },
+      {
+        ok: false,
+        error: "not_configured",
+        message:
+          "Email is not configured on the server yet. Add RESEND_API_KEY and CONTACT_TO_EMAIL to .env.local (see .env.example), then restart the dev server.",
+      },
       { status: 503 },
     );
   }
