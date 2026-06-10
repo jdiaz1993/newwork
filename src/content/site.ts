@@ -35,7 +35,7 @@ export const site = {
   /** Used for metadata / OG — set to your production domain before launch */
   url: "https://example.com",
   email: "newworkcustomupholstery@gmail.com",
-  phone: "(323) 555-1234",
+  phone: "1-310-293-9832",
   addressLine1: "1234 Upholstery Lane",
   addressLine2: "",
   cityStateZip: "Los Angeles, CA 90012",

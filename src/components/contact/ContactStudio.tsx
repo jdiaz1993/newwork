@@ -32,23 +32,13 @@ export function ContactStudio() {
       };
 
       if (!res.ok) {
-        if (res.status === 503 && data.error === "not_configured") {
+        if (data.error === "invalid_email") {
+          setErrorHint("Please enter a valid email address in the form.");
+        } else if (data.error === "save_failed") {
           setErrorHint(
             data.message ??
-              "Email is not configured on the server yet. Add RESEND_API_KEY and CONTACT_TO_EMAIL to .env.local (see .env.example), then restart the dev server.",
+              "We could not save your request. Please try again or call us directly.",
           );
-        } else if (data.error === "send_failed") {
-          const parts = [
-            data.detail ? `Resend: ${data.detail}` : null,
-            data.hint ?? null,
-          ].filter(Boolean);
-          setErrorHint(
-            parts.length > 0
-              ? parts.join(" ")
-              : "The email provider rejected the send. Check RESEND_API_KEY, CONTACT_FROM_EMAIL (domain must be verified in Resend), and Resend dashboard logs.",
-          );
-        } else if (data.error === "invalid_email") {
-          setErrorHint("Please enter a valid email address in the form.");
         } else {
           setErrorHint("Please try again or reach us by phone or email.");
         }
