@@ -4,15 +4,15 @@ import { site } from "@/content/site";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-border-subtle bg-charcoal-elevated">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.1fr_1fr_1fr]">
-        <div className="space-y-5">
+    <footer className="mt-auto border-t border-border-subtle bg-charcoal-elevated">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-8 md:grid-cols-[1.1fr_1fr_1fr] md:py-12">
+        <div className="space-y-4">
           <Image
             src={site.logo.src}
             alt={site.logo.alt}
             width={site.logo.width}
             height={site.logo.height}
-            className="h-10 w-auto opacity-95"
+            className="h-16 w-auto max-w-full opacity-95 sm:h-20"
           />
           <p className="max-w-sm text-sm leading-relaxed text-cream-muted">
             {site.footer.tagline}
@@ -55,7 +55,7 @@ export function Footer() {
               </Link>
             </li>
           </ul>
-          <div className="mt-6 flex gap-4 text-xs uppercase tracking-[0.2em] text-cream-muted">
+          <div className="mt-6 flex flex-wrap gap-4 text-xs uppercase tracking-[0.2em] text-cream-muted">
             <a
               href={site.social.instagram}
               className="border-b border-transparent pb-0.5 transition hover:border-gold hover:text-cream"
@@ -75,7 +75,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-border-subtle py-6 text-center text-xs tracking-wide text-cream-muted/80">
+      <div className="border-t border-border-subtle py-5 text-center text-xs tracking-wide text-cream-muted/80">
         © {new Date().getFullYear()} {site.name}. Crafted with care.
       </div>
     </footer>

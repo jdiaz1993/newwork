@@ -26,19 +26,19 @@ export function Navbar() {
       }`}
       style={{ height: "var(--nav-h)" }}
     >
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
-        <Link href="/" className="relative z-10 flex shrink-0 items-center gap-2">
+      <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-6 px-4 sm:px-8 xl:max-w-7xl 2xl:max-w-[1500px] 2xl:px-10">
+        <Link href="/" className="relative z-10 flex shrink-0 items-center">
           <Image
             src={site.logo.src}
             alt={site.logo.alt}
             width={site.logo.width}
             height={site.logo.height}
-            className="h-9 w-auto sm:h-10"
+            className="h-12 w-auto sm:h-14"
             priority
           />
         </Link>
         <nav
-          className="hidden items-center gap-10 md:flex"
+          className="hidden items-center justify-end gap-7 md:flex"
           aria-label="Primary"
         >
           {site.nav.map((item) => {
@@ -47,7 +47,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm tracking-wide transition-colors ${
+                className={`text-xs font-medium uppercase tracking-[0.16em] transition-colors ${
                   active
                     ? "text-gold"
                     : "text-cream-muted hover:text-cream"
@@ -58,13 +58,9 @@ export function Navbar() {
             );
           })}
         </nav>
-        <Link
-          href="/contact"
-          className="hidden rounded-sm border border-gold/50 bg-gold/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cream transition hover:border-gold hover:bg-gold/20 md:inline-flex"
-        >
-          Request quote
-        </Link>
-        <MobileNav pathname={pathname} />
+        <div className="flex justify-end md:hidden">
+          <MobileNav pathname={pathname} />
+        </div>
       </div>
     </header>
   );
@@ -73,47 +69,55 @@ export function Navbar() {
 function MobileNav({ pathname }: { pathname: string | null }) {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
   return (
     <div className="md:hidden">
       <button
         type="button"
-        className="inline-flex items-center justify-center rounded-sm border border-border-subtle px-3 py-2 text-xs font-semibold uppercase tracking-widest text-cream"
+        className="inline-flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full border border-border-subtle bg-charcoal-elevated/70 text-cream shadow-sm transition hover:border-gold/60"
         aria-expanded={open}
         aria-controls="mobile-menu"
+        aria-label="Toggle navigation menu"
         onClick={() => setOpen((v) => !v)}
       >
-        Menu
+        <span
+          className={`h-0.5 w-5 rounded-full bg-current transition ${
+            open ? "translate-y-2 rotate-45" : ""
+          }`}
+        />
+        <span
+          className={`h-0.5 w-5 rounded-full bg-current transition ${
+            open ? "opacity-0" : ""
+          }`}
+        />
+        <span
+          className={`h-0.5 w-5 rounded-full bg-current transition ${
+            open ? "-translate-y-2 -rotate-45" : ""
+          }`}
+        />
       </button>
       {open ? (
         <div
           id="mobile-menu"
-          className="absolute inset-x-0 top-full border-b border-border-subtle bg-charcoal-elevated px-5 py-5 shadow-xl animate-fade-in"
+          className="absolute inset-x-0 top-full border-b border-border-subtle bg-charcoal/95 px-4 py-4 shadow-2xl backdrop-blur-md animate-fade-in"
         >
-          <div className="flex flex-col gap-4">
+          <div className="mx-auto flex max-w-6xl flex-col gap-2">
             {site.nav.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm tracking-wide ${
-                    active ? "text-gold" : "text-cream-muted"
+                  onClick={() => setOpen(false)}
+                  className={`rounded-xl px-4 py-3 text-base font-medium tracking-wide transition ${
+                    active
+                      ? "bg-gold/15 text-gold"
+                      : "text-cream-muted hover:bg-cream/5 hover:text-cream"
                   }`}
                 >
                   {item.label}
                 </Link>
               );
             })}
-            <Link
-              href="/contact"
-              className="mt-2 rounded-sm border border-gold/50 bg-gold/10 px-4 py-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-cream"
-            >
-              Request quote
-            </Link>
           </div>
         </div>
       ) : null}

@@ -59,23 +59,23 @@ export function ContactStudio() {
 
   return (
     <div className="contact-font-sans bg-black text-[#F5F5DC]">
-      <section className="relative px-6 py-20">
+      <section className="relative px-4 py-16 sm:px-6 md:py-20">
         <div className="mx-auto max-w-7xl text-center">
           <div className="mb-6 inline-block h-0.5 w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
-          <h1 className="contact-font-serif text-5xl font-bold leading-tight md:text-6xl lg:text-7xl">
+          <h1 className="contact-font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
             {c.heroTitle}
           </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-xl font-light text-[#F5F5DC]/70 md:text-2xl">
+          <p className="mx-auto mt-6 max-w-3xl text-lg font-light text-[#F5F5DC]/70 sm:text-xl md:text-2xl">
             {c.heroSubtitle}
           </p>
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="px-4 pb-16 sm:px-6 md:pb-24">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 md:grid-cols-2">
-            <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-8 md:p-10">
-              <h2 className="contact-font-serif text-3xl font-bold">{c.formTitle}</h2>
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+            <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-5 sm:p-8 md:p-10">
+              <h2 className="contact-font-serif text-2xl font-bold sm:text-3xl">{c.formTitle}</h2>
 
               <form onSubmit={handleSubmit} className="mt-6 space-y-6">
                 <div>
@@ -87,7 +87,7 @@ export function ContactStudio() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
+                    className="w-full rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-base text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
                     placeholder="John Doe"
                     autoComplete="name"
                   />
@@ -102,7 +102,7 @@ export function ContactStudio() {
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
+                    className="w-full rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-base text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
                     placeholder="(323) 555-1234"
                     autoComplete="tel"
                   />
@@ -117,7 +117,7 @@ export function ContactStudio() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
+                    className="w-full rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-base text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
                     placeholder="john@example.com"
                     autoComplete="email"
                   />
@@ -132,7 +132,7 @@ export function ContactStudio() {
                     rows={5}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full resize-none rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
+                    className="w-full resize-none rounded-lg border border-[#D4AF37]/20 bg-black/50 px-4 py-3 text-base text-[#F5F5DC] transition-all duration-300 placeholder:text-[#F5F5DC]/30 focus:border-[#D4AF37] focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none"
                     placeholder="Tell us about your upholstery project..."
                   />
                 </div>
@@ -162,13 +162,13 @@ export function ContactStudio() {
             </div>
 
             <div className="space-y-8">
-              <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-8">
+              <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-5 sm:p-8">
                 <h3 className="contact-font-serif text-2xl font-bold">
                   {c.infoCardTitle}
                 </h3>
 
                 <div className="mt-6 space-y-6">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-transparent">
                       <Phone className="h-6 w-6 text-[#D4AF37]" aria-hidden />
                     </div>
@@ -183,7 +183,7 @@ export function ContactStudio() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-transparent">
                       <Mail className="h-6 w-6 text-[#D4AF37]" aria-hidden />
                     </div>
@@ -198,7 +198,7 @@ export function ContactStudio() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-transparent">
                       <MapPin className="h-6 w-6 text-[#D4AF37]" aria-hidden />
                     </div>
@@ -212,7 +212,7 @@ export function ContactStudio() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-transparent">
                       <Clock className="h-6 w-6 text-[#D4AF37]" aria-hidden />
                     </div>
@@ -228,7 +228,7 @@ export function ContactStudio() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-transparent">
                       <Instagram className="h-6 w-6 text-[#D4AF37]" aria-hidden />
                     </div>
@@ -247,7 +247,7 @@ export function ContactStudio() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-8">
+              <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-5 sm:p-8">
                 <h3 className="contact-font-serif text-2xl font-bold">
                   {c.serviceAreaTitle}
                 </h3>
@@ -269,9 +269,9 @@ export function ContactStudio() {
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="px-4 pb-16 sm:px-6 md:pb-24">
         <div className="mx-auto max-w-6xl">
-          <div className="flex h-96 items-center justify-center overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black">
+          <div className="flex h-72 items-center justify-center overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black sm:h-96">
             <div className="text-center">
               <MapPin className="mx-auto mb-4 h-16 w-16 text-[#D4AF37]" aria-hidden />
               <p className="text-[#F5F5DC]/70">{c.mapLabel}</p>

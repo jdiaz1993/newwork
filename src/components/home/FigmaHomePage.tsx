@@ -17,7 +17,7 @@ export function FigmaHomePage() {
 
   return (
     <div className="figma-font-sans bg-black text-[#F5F5DC]">
-      <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden">
+      <section className="relative flex min-h-[calc(100vh-var(--nav-h))] items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithFallback
             src={hero.image}
@@ -28,44 +28,44 @@ export function FigmaHomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/60" />
         </div>
 
-        <div className="absolute left-10 top-10 h-32 w-32 border-l-2 border-t-2 border-[#D4AF37]/30" />
-        <div className="absolute bottom-10 right-10 h-32 w-32 border-b-2 border-r-2 border-[#D4AF37]/30" />
+        <div className="absolute left-10 top-10 hidden h-32 w-32 border-l-2 border-t-2 border-[#D4AF37]/30 sm:block" />
+        <div className="absolute bottom-10 right-10 hidden h-32 w-32 border-b-2 border-r-2 border-[#D4AF37]/30 sm:block" />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
-          <div className="mb-6 inline-block rounded-full border border-[#D4AF37]/30 px-6 py-2">
-            <span className="text-sm tracking-wide text-[#D4AF37]">{hero.badge}</span>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-20">
+          <div className="mb-5 inline-block rounded-full border border-[#D4AF37]/30 px-4 py-2 sm:mb-6 sm:px-6">
+            <span className="text-xs tracking-wide text-[#D4AF37] sm:text-sm">{hero.badge}</span>
           </div>
 
-          <h1 className="figma-font-serif mb-6 text-5xl font-bold leading-tight md:text-7xl lg:text-8xl">
+          <h1 className="figma-font-serif mb-6 text-4xl font-bold leading-tight sm:text-5xl md:text-7xl lg:text-8xl">
             {hero.headline[0]}
             <br />
             {hero.headline[1]}
           </h1>
 
-          <div className="mb-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             {hero.tags.map((tag) => (
               <div key={tag} className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
-                <span className="tracking-wider text-[#D4AF37]">{tag}</span>
+                <span className="text-sm tracking-wider text-[#D4AF37] sm:text-base">{tag}</span>
               </div>
             ))}
           </div>
 
-          <p className="mx-auto mb-12 max-w-3xl text-xl font-light text-[#F5F5DC]/80 md:text-2xl">
+          <p className="mx-auto mb-10 max-w-3xl text-lg font-light text-[#F5F5DC]/80 sm:text-xl md:mb-12 md:text-2xl">
             {hero.subhead}
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
             <Link
               href="/contact"
-              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8930A] px-8 py-4 font-semibold text-black transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+              className="group flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8930A] px-8 py-4 font-semibold text-black transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
             >
               Get a Quote
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               href="/gallery"
-              className="rounded-full border-2 border-[#F5F5DC]/30 bg-transparent px-8 py-4 font-semibold text-[#F5F5DC] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#F5F5DC]/10"
+              className="rounded-full border-2 border-[#F5F5DC]/30 bg-transparent px-8 py-4 text-center font-semibold text-[#F5F5DC] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#F5F5DC]/10"
             >
               View Our Work
             </Link>
@@ -73,14 +73,14 @@ export function FigmaHomePage() {
         </div>
       </section>
 
-      <section className="bg-gradient-to-b from-black to-[#0A0A0A] px-6 py-24">
+      <section className="bg-gradient-to-b from-black to-[#0A0A0A] px-4 py-16 sm:px-6 md:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-16 text-center">
+          <div className="mb-10 text-center md:mb-16">
             <div className="mb-6 inline-block h-0.5 w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
-            <h2 className="figma-font-serif text-4xl font-bold md:text-5xl">
+            <h2 className="figma-font-serif text-3xl font-bold sm:text-4xl md:text-5xl">
               {services.kicker}
             </h2>
-            <p className="mt-4 text-xl text-[#F5F5DC]/70">{services.intro}</p>
+            <p className="mx-auto mt-4 max-w-3xl text-lg text-[#F5F5DC]/70 sm:text-xl">{services.intro}</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -89,7 +89,7 @@ export function FigmaHomePage() {
               return (
                 <div
                   key={service.title}
-                  className="group rounded-lg border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-8 transition-all duration-300 hover:border-[#D4AF37] hover:shadow-[0_0_30px_rgba(212,175,55,0.15)]"
+                  className="group rounded-lg border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-6 transition-all duration-300 hover:border-[#D4AF37] hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] sm:p-8"
                 >
                   <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-transparent transition-transform group-hover:scale-110">
                     <Icon className="h-8 w-8 text-[#D4AF37]" aria-hidden />
@@ -103,17 +103,17 @@ export function FigmaHomePage() {
         </div>
       </section>
 
-      <section className="px-6 py-24">
+      <section className="px-4 py-16 sm:px-6 md:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-16 text-center">
+          <div className="mb-10 text-center md:mb-16">
             <div className="mb-6 inline-block h-0.5 w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
-            <h2 className="figma-font-serif text-4xl font-bold md:text-5xl">
+            <h2 className="figma-font-serif text-3xl font-bold sm:text-4xl md:text-5xl">
               {showcase.kicker}
             </h2>
-            <p className="mt-4 text-xl text-[#F5F5DC]/70">{showcase.intro}</p>
+            <p className="mx-auto mt-4 max-w-3xl text-lg text-[#F5F5DC]/70 sm:text-xl">{showcase.intro}</p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3 md:gap-8">
             {showcase.images.map((image, index) => (
               <Link
                 key={image}
@@ -123,7 +123,7 @@ export function FigmaHomePage() {
                 <ImageWithFallback
                   src={image}
                   alt={`Showcase ${index + 1}`}
-                  className="h-80 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110 sm:h-80"
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <span className="figma-font-serif text-xl font-semibold text-[#D4AF37]">
@@ -146,21 +146,21 @@ export function FigmaHomePage() {
         </div>
       </section>
 
-      <section className="bg-gradient-to-b from-black to-[#0A0A0A] px-6 py-24">
+      <section className="bg-gradient-to-b from-black to-[#0A0A0A] px-4 py-16 sm:px-6 md:py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
+          <div className="mb-10 text-center md:mb-16">
             <div className="mb-6 inline-block h-0.5 w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
-            <h2 className="figma-font-serif text-4xl font-bold md:text-5xl">
+            <h2 className="figma-font-serif text-3xl font-bold sm:text-4xl md:text-5xl">
               {testimonials.kicker}
             </h2>
-            <p className="mt-4 text-xl text-[#F5F5DC]/70">{testimonials.intro}</p>
+            <p className="mx-auto mt-4 max-w-3xl text-lg text-[#F5F5DC]/70 sm:text-xl">{testimonials.intro}</p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
             {testimonials.items.map((t) => (
               <div
                 key={t.name}
-                className="rounded-lg border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-8"
+                className="rounded-lg border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black p-6 sm:p-8"
               >
                 <div className="mb-4 flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (

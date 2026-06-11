@@ -23,23 +23,23 @@ export function FigmaServicesPage() {
 
   return (
     <div className="services-font-sans bg-black text-[#F5F5DC]">
-      <section className="relative overflow-hidden px-6 py-20">
+      <section className="relative overflow-hidden px-4 py-16 sm:px-6 md:py-20">
         <div className="absolute inset-0">
-          <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-[#D4AF37] opacity-10 blur-[120px]" />
+          <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-[#D4AF37] opacity-10 blur-[100px] sm:h-96 sm:w-96 sm:blur-[120px]" />
         </div>
 
         <div className="relative mx-auto max-w-7xl text-center">
           <div className="mb-6 inline-block h-0.5 w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
-          <h1 className="services-font-serif text-5xl font-bold md:text-6xl lg:text-7xl">
+          <h1 className="services-font-serif text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl">
             {hero.title}
           </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-xl font-light text-[#F5F5DC]/70 md:text-2xl">
+          <p className="mx-auto mt-6 max-w-3xl text-lg font-light text-[#F5F5DC]/70 sm:text-xl md:text-2xl">
             {hero.subtitle}
           </p>
         </div>
       </section>
 
-      <section className="px-6 py-12">
+      <section className="px-4 py-10 sm:px-6 md:py-12">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {items.map((service) => {
@@ -49,12 +49,12 @@ export function FigmaServicesPage() {
                   key={service.title}
                   className="group overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black transition-all duration-300 hover:border-[#D4AF37] hover:shadow-[0_0_40px_rgba(212,175,55,0.15)]"
                 >
-                  <div className="p-8">
+                  <div className="p-6 sm:p-8">
                     <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-transparent transition-transform group-hover:scale-110">
                       <Icon className="h-8 w-8 text-[#D4AF37]" aria-hidden />
                     </div>
 
-                    <h3 className="services-font-serif text-2xl font-bold">{service.title}</h3>
+                    <h3 className="services-font-serif text-xl font-bold sm:text-2xl">{service.title}</h3>
                     <p className="mb-6 mt-4 text-[#F5F5DC]/70">{service.description}</p>
 
                     <ul className="mb-6 space-y-2">
@@ -83,14 +83,14 @@ export function FigmaServicesPage() {
         </div>
       </section>
 
-      <section className="px-6 py-16">
+      <section className="px-4 py-12 sm:px-6 md:py-16">
         <div className="mx-auto max-w-4xl">
-          <div className="rounded-2xl border border-[#D4AF37]/30 bg-gradient-to-br from-[#1A1A1A] to-black p-8 text-center md:p-12">
-            <h2 className="services-font-serif text-3xl font-bold">{pricing.title}</h2>
-            <p className="mb-6 mt-4 text-lg text-[#F5F5DC]/70">{pricing.body}</p>
+          <div className="rounded-2xl border border-[#D4AF37]/30 bg-gradient-to-br from-[#1A1A1A] to-black p-6 text-center sm:p-8 md:p-12">
+            <h2 className="services-font-serif text-2xl font-bold sm:text-3xl">{pricing.title}</h2>
+            <p className="mb-6 mt-4 text-base text-[#F5F5DC]/70 sm:text-lg">{pricing.body}</p>
             <Link
               href="/contact"
-              className="inline-block rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8930A] px-8 py-4 font-semibold text-black transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+              className="inline-block w-full rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8930A] px-8 py-4 font-semibold text-black transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] sm:w-auto"
             >
               {pricing.cta}
             </Link>

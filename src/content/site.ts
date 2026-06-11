@@ -60,10 +60,10 @@ export const site = {
   ] satisfies NavItem[],
   /** Replace with your logo — same dimensions recommended for navbar */
   logo: {
-    src: "/images/logo.svg",
+    src: "/images/newwork-logo-transparent.png",
     alt: "New Work Custom Upholstery",
-    width: 160,
-    height: 40,
+    width: 612,
+    height: 408,
   },
   hero: {
     eyebrow: "Atelier · Since 1987",

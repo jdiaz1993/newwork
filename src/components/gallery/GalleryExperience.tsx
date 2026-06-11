@@ -33,7 +33,7 @@ export function GalleryExperience({ items }: { items: readonly GalleryItem[] }) 
 
   return (
     <>
-      <div className="flex flex-wrap gap-3">
+      <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
         {galleryCategories.map((c) => {
           const selected = filter === c.id;
           return (
@@ -41,7 +41,7 @@ export function GalleryExperience({ items }: { items: readonly GalleryItem[] }) 
               key={c.id}
               type="button"
               onClick={() => setFilter(c.id)}
-              className={`rounded-sm border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${
+              className={`shrink-0 rounded-sm border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${
                 selected
                   ? "border-gold bg-gold/15 text-cream"
                   : "border-border-subtle text-cream-muted hover:border-gold/35 hover:text-cream"
@@ -53,7 +53,7 @@ export function GalleryExperience({ items }: { items: readonly GalleryItem[] }) 
         })}
       </div>
 
-      <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-8 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((item) => (
           <li key={item.id}>
             <button
@@ -84,7 +84,7 @@ export function GalleryExperience({ items }: { items: readonly GalleryItem[] }) 
 
       {active ? (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-charcoal/90 p-4 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-charcoal/90 p-3 backdrop-blur-sm animate-fade-in sm:p-4"
           role="dialog"
           aria-modal="true"
           aria-label="Image preview"
@@ -92,7 +92,7 @@ export function GalleryExperience({ items }: { items: readonly GalleryItem[] }) 
         >
           <button
             type="button"
-            className="absolute right-5 top-5 rounded-sm border border-border-subtle px-3 py-2 text-xs font-semibold uppercase tracking-widest text-cream transition hover:border-gold"
+            className="absolute right-3 top-3 rounded-sm border border-border-subtle bg-charcoal/80 px-3 py-2 text-xs font-semibold uppercase tracking-widest text-cream transition hover:border-gold sm:right-5 sm:top-5"
             onClick={close}
           >
             Close
@@ -111,8 +111,8 @@ export function GalleryExperience({ items }: { items: readonly GalleryItem[] }) 
                 priority
               />
             </div>
-            <div className="border-t border-border-subtle px-6 py-4">
-              <p className="font-serif text-2xl text-cream">{active.title}</p>
+            <div className="border-t border-border-subtle px-4 py-4 sm:px-6">
+              <p className="font-serif text-xl text-cream sm:text-2xl">{active.title}</p>
               <p className="mt-1 text-xs uppercase tracking-[0.2em] text-cream-muted">
                 {active.category}
               </p>

@@ -4,7 +4,7 @@
 
 export const figmaHome = {
   hero: {
-    badge: "SINCE 1985",
+    badge: "SINCE 2000",
     headline: ["Custom Upholstery &", "Furniture Restoration"],
     tags: ["Craftsmanship", "Quality", "Timeless Design"],
     subhead:
