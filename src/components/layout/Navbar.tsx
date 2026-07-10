@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,15 +26,11 @@ export function Navbar() {
       style={{ height: "var(--nav-h)" }}
     >
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-6 px-4 sm:px-8 xl:max-w-7xl 2xl:max-w-[1500px] 2xl:px-10">
-        <Link href="/" className="relative z-10 flex shrink-0 items-center">
-          <Image
-            src={site.logo.src}
-            alt={site.logo.alt}
-            width={site.logo.width}
-            height={site.logo.height}
-            className="h-12 w-auto sm:h-14"
-            priority
-          />
+        <Link
+          href="/"
+          className="relative z-10 shrink-0 font-serif text-base font-semibold tracking-wide text-gold transition hover:text-cream sm:text-lg"
+        >
+          New Work Custom Design
         </Link>
         <nav
           className="hidden items-center justify-end gap-7 md:flex"

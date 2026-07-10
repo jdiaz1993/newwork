@@ -4,6 +4,7 @@ import { ArrowRight, Award, Sofa, Sparkles, Star, Users } from "lucide-react";
 import Link from "next/link";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
 import { figmaHome } from "@/content/figmaHome";
+import { site } from "@/content/site";
 
 const serviceIcons = {
   Sofa,
@@ -18,22 +19,24 @@ export function FigmaHomePage() {
   return (
     <div className="figma-font-sans bg-black text-[#F5F5DC]">
       <section className="relative flex min-h-[calc(100vh-var(--nav-h))] items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <ImageWithFallback
-            src={hero.image}
-            alt={hero.imageAlt}
-            className="h-full w-full object-cover"
-            loading="eager"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/60" />
+        <div className="absolute inset-0 bg-black">
+          <div className="flex h-full w-full items-center justify-center p-6 sm:p-10 md:p-14">
+            <ImageWithFallback
+              src={site.logo.src}
+              alt=""
+              className="max-h-full max-w-full object-contain"
+              loading="eager"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/75" />
         </div>
 
         <div className="absolute left-10 top-10 hidden h-32 w-32 border-l-2 border-t-2 border-[#D4AF37]/30 sm:block" />
         <div className="absolute bottom-10 right-10 hidden h-32 w-32 border-b-2 border-r-2 border-[#D4AF37]/30 sm:block" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-20">
-          <div className="mb-5 inline-block rounded-full border border-[#D4AF37]/30 px-4 py-2 sm:mb-6 sm:px-6">
-            <span className="text-xs tracking-wide text-[#D4AF37] sm:text-sm">{hero.badge}</span>
+          <div className="mb-5 inline-block rounded-full border border-[#F5F5DC]/30 px-4 py-2 sm:mb-6 sm:px-6">
+            <span className="text-xs tracking-wide text-[#F5F5DC] sm:text-sm">{hero.badge}</span>
           </div>
 
           <h1 className="figma-font-serif mb-6 text-4xl font-bold leading-tight sm:text-5xl md:text-7xl lg:text-8xl">
@@ -45,8 +48,8 @@ export function FigmaHomePage() {
           <div className="mb-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             {hero.tags.map((tag) => (
               <div key={tag} className="flex items-center gap-2">
-                <div className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
-                <span className="text-sm tracking-wider text-[#D4AF37] sm:text-base">{tag}</span>
+                <div className="h-1.5 w-1.5 rounded-full bg-[#F5F5DC]" />
+                <span className="text-sm tracking-wider text-[#F5F5DC] sm:text-base">{tag}</span>
               </div>
             ))}
           </div>
@@ -65,7 +68,7 @@ export function FigmaHomePage() {
             </Link>
             <Link
               href="/gallery"
-              className="rounded-full border-2 border-[#F5F5DC]/30 bg-transparent px-8 py-4 text-center font-semibold text-[#F5F5DC] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#F5F5DC]/10"
+              className="rounded-full border border-[#F5F5DC]/30 px-8 py-4 text-center font-semibold text-[#F5F5DC] transition-all duration-300 hover:border-[#F5F5DC]/60"
             >
               View Our Work
             </Link>

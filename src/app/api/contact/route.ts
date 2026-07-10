@@ -34,7 +34,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const id = createConsultationRequest({ name, phone, email, message });
+    const id = await createConsultationRequest({ name, phone, email, message });
     return NextResponse.json({ ok: true, id });
   } catch (error) {
     console.error("[contact] Failed to save consultation request:", error);

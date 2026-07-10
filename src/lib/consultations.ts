@@ -24,6 +24,201 @@ export type CreateConsultationInput = {
   message: string;
 };
 
+type ConsultationRow = {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  message: string;
+  status: ConsultationStatus;
+  is_favorite: boolean;
+  created_at: string;
+  read_at: string | null;
+  reached_out_at: string | null;
+};
+
+function mapRow(row: ConsultationRow): ConsultationRequest {
+  return {
+    id: row.id,
+    name: row.name,
+    phone: row.phone,
+    email: row.email,
+    message: row.message,
+    status: row.status,
+    isFavorite: Boolean(row.is_favorite),
+    createdAt: row.created_at,
+    readAt: row.read_at,
+    reachedOutAt: row.reached_out_at,
+  };
+}
+
+function useSupabase(): boolean {
+  return Boolean(
+    process.env.SUPABASE_URL?.trim() && process.env.SUPABASE_SERVICE_ROLE_KEY?.trim(),
+  );
+}
+
+function getSupabaseConfig() {
+  const url = process.env.SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  if (!url || !key) {
+    throw new Error("Supabase is not configured.");
+  }
+  return { url: url.replace(/\/$/, ""), key };
+}
+
+async function supabaseRequest<T>(
+  path: string,
+  init: RequestInit = {},
+): Promise<T> {
+  const { url, key } = getSupabaseConfig();
+  const response = await fetch(`${url}/rest/v1/${path}`, {
+    ...init,
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+      ...(init.headers ?? {}),
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Supabase request failed (${response.status}): ${body}`);
+  }
+
+  if (response.status === 204) {
+    return undefined as T;
+  }
+
+  const text = await response.text();
+  return text ? (JSON.parse(text) as T) : (undefined as T);
+}
+
+async function createConsultationRequestSupabase(
+  input: CreateConsultationInput,
+): Promise<number> {
+  const rows = await supabaseRequest<ConsultationRow[]>("consultation_requests", {
+    method: "POST",
+    headers: {
+      Prefer: "return=representation",
+    },
+    body: JSON.stringify({
+      name: input.name,
+      phone: input.phone,
+      email: input.email,
+      message: input.message,
+    }),
+  });
+
+  const id = rows[0]?.id;
+  if (!id) {
+    throw new Error("Supabase insert did not return an id.");
+  }
+  return id;
+}
+
+async function listConsultationRequestsSupabase(): Promise<ConsultationRequest[]> {
+  const rows = await supabaseRequest<ConsultationRow[]>(
+    "consultation_requests?select=id,name,phone,email,message,status,is_favorite,created_at,read_at,reached_out_at&order=is_favorite.desc,status.asc,created_at.desc",
+  );
+  return rows.map(mapRow);
+}
+
+async function markConsultationReadSupabase(id: number): Promise<boolean> {
+  const rows = await supabaseRequest<ConsultationRow[]>(
+    `consultation_requests?select=status,read_at&id=eq.${id}&limit=1`,
+  );
+  const row = rows[0];
+  if (!row) return false;
+
+  const updates: Record<string, string> = {
+    read_at: row.read_at ?? new Date().toISOString(),
+  };
+  if (row.status === "new") {
+    updates.status = "read";
+  }
+
+  await supabaseRequest(`consultation_requests?id=eq.${id}`, {
+    method: "PATCH",
+    headers: {
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify(updates),
+  });
+  return true;
+}
+
+async function markConsultationReachedOutSupabase(id: number): Promise<boolean> {
+  const rows = await supabaseRequest<ConsultationRow[]>(
+    `consultation_requests?select=read_at,reached_out_at&id=eq.${id}&limit=1`,
+  );
+  const row = rows[0];
+  if (!row) return false;
+
+  const now = new Date().toISOString();
+  await supabaseRequest(`consultation_requests?id=eq.${id}`, {
+    method: "PATCH",
+    headers: {
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      status: "reached_out",
+      read_at: row.read_at ?? now,
+      reached_out_at: row.reached_out_at ?? now,
+    }),
+  });
+  return true;
+}
+
+async function unmarkConsultationReachedOutSupabase(id: number): Promise<boolean> {
+  const rows = await supabaseRequest<ConsultationRow[]>(
+    `consultation_requests?select=read_at&id=eq.${id}&limit=1`,
+  );
+  const row = rows[0];
+  if (!row) return false;
+
+  await supabaseRequest(`consultation_requests?id=eq.${id}`, {
+    method: "PATCH",
+    headers: {
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      status: "read",
+      read_at: row.read_at ?? new Date().toISOString(),
+      reached_out_at: null,
+    }),
+  });
+  return true;
+}
+
+async function setConsultationFavoriteSupabase(
+  id: number,
+  isFavorite: boolean,
+): Promise<boolean> {
+  await supabaseRequest(`consultation_requests?id=eq.${id}`, {
+    method: "PATCH",
+    headers: {
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      is_favorite: isFavorite,
+    }),
+  });
+  return true;
+}
+
+async function deleteConsultationRequestSupabase(id: number): Promise<boolean> {
+  await supabaseRequest(`consultation_requests?id=eq.${id}`, {
+    method: "DELETE",
+    headers: {
+      Prefer: "return=minimal",
+    },
+  });
+  return true;
+}
+
 let db: Database.Database | null = null;
 
 function columnExists(database: Database.Database, columnName: string): boolean {
@@ -98,7 +293,7 @@ function getDb(): Database.Database {
   return db;
 }
 
-export function createConsultationRequest(input: CreateConsultationInput): number {
+function createConsultationRequestSqlite(input: CreateConsultationInput): number {
   const stmt = getDb().prepare(`
     INSERT INTO consultation_requests (name, phone, email, message)
     VALUES (@name, @phone, @email, @message)
@@ -107,7 +302,7 @@ export function createConsultationRequest(input: CreateConsultationInput): numbe
   return Number(result.lastInsertRowid);
 }
 
-export function listConsultationRequests(): ConsultationRequest[] {
+function listConsultationRequestsSqlite(): ConsultationRequest[] {
   const rows = getDb()
     .prepare(
       `
@@ -137,7 +332,7 @@ export function listConsultationRequests(): ConsultationRequest[] {
   return rows.map((row) => ({ ...row, isFavorite: Boolean(row.isFavorite) }));
 }
 
-export function markConsultationRead(id: number): boolean {
+function markConsultationReadSqlite(id: number): boolean {
   const result = getDb()
     .prepare(
       `
@@ -152,7 +347,7 @@ export function markConsultationRead(id: number): boolean {
   return result.changes > 0;
 }
 
-export function markConsultationReachedOut(id: number): boolean {
+function markConsultationReachedOutSqlite(id: number): boolean {
   const result = getDb()
     .prepare(
       `
@@ -168,7 +363,7 @@ export function markConsultationReachedOut(id: number): boolean {
   return result.changes > 0;
 }
 
-export function unmarkConsultationReachedOut(id: number): boolean {
+function unmarkConsultationReachedOutSqlite(id: number): boolean {
   const result = getDb()
     .prepare(
       `
@@ -184,7 +379,7 @@ export function unmarkConsultationReachedOut(id: number): boolean {
   return result.changes > 0;
 }
 
-export function setConsultationFavorite(id: number, isFavorite: boolean): boolean {
+function setConsultationFavoriteSqlite(id: number, isFavorite: boolean): boolean {
   const result = getDb()
     .prepare(
       `
@@ -197,7 +392,7 @@ export function setConsultationFavorite(id: number, isFavorite: boolean): boolea
   return result.changes > 0;
 }
 
-export function deleteConsultationRequest(id: number): boolean {
+function deleteConsultationRequestSqlite(id: number): boolean {
   const result = getDb()
     .prepare(
       `
@@ -207,4 +402,58 @@ export function deleteConsultationRequest(id: number): boolean {
     )
     .run({ id });
   return result.changes > 0;
+}
+
+export async function createConsultationRequest(
+  input: CreateConsultationInput,
+): Promise<number> {
+  if (useSupabase()) {
+    return createConsultationRequestSupabase(input);
+  }
+  return createConsultationRequestSqlite(input);
+}
+
+export async function listConsultationRequests(): Promise<ConsultationRequest[]> {
+  if (useSupabase()) {
+    return listConsultationRequestsSupabase();
+  }
+  return listConsultationRequestsSqlite();
+}
+
+export async function markConsultationRead(id: number): Promise<boolean> {
+  if (useSupabase()) {
+    return markConsultationReadSupabase(id);
+  }
+  return markConsultationReadSqlite(id);
+}
+
+export async function markConsultationReachedOut(id: number): Promise<boolean> {
+  if (useSupabase()) {
+    return markConsultationReachedOutSupabase(id);
+  }
+  return markConsultationReachedOutSqlite(id);
+}
+
+export async function unmarkConsultationReachedOut(id: number): Promise<boolean> {
+  if (useSupabase()) {
+    return unmarkConsultationReachedOutSupabase(id);
+  }
+  return unmarkConsultationReachedOutSqlite(id);
+}
+
+export async function setConsultationFavorite(
+  id: number,
+  isFavorite: boolean,
+): Promise<boolean> {
+  if (useSupabase()) {
+    return setConsultationFavoriteSupabase(id, isFavorite);
+  }
+  return setConsultationFavoriteSqlite(id, isFavorite);
+}
+
+export async function deleteConsultationRequest(id: number): Promise<boolean> {
+  if (useSupabase()) {
+    return deleteConsultationRequestSupabase(id);
+  }
+  return deleteConsultationRequestSqlite(id);
 }

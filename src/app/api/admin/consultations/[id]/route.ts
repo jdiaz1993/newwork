@@ -37,13 +37,13 @@ export async function PATCH(request: Request, context: RouteContext) {
 
   const updated =
     body.action === "mark_read"
-      ? markConsultationRead(id)
+      ? await markConsultationRead(id)
       : body.action === "mark_reached_out"
-        ? markConsultationReachedOut(id)
+        ? await markConsultationReachedOut(id)
         : body.action === "unmark_reached_out"
-          ? unmarkConsultationReachedOut(id)
+          ? await unmarkConsultationReachedOut(id)
           : body.action === "set_favorite" && typeof body.isFavorite === "boolean"
-            ? setConsultationFavorite(id, body.isFavorite)
+            ? await setConsultationFavorite(id, body.isFavorite)
             : null;
 
   if (updated === null) {
@@ -68,7 +68,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
     return NextResponse.json({ ok: false, error: "invalid_id" }, { status: 400 });
   }
 
-  if (!deleteConsultationRequest(id)) {
+  if (!(await deleteConsultationRequest(id))) {
     return NextResponse.json({ ok: false, error: "not_found" }, { status: 404 });
   }
 

@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local sqlite database (consultation requests)
 /data/
+
+# raw browser-save image dump (usable files live in public/images/work/)
+/public/NewWork images/

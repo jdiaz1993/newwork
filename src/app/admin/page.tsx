@@ -20,7 +20,7 @@ export default async function AdminPage() {
     );
   }
 
-  const requests = listConsultationRequests();
+  const requests = await listConsultationRequests();
 
   return (
     <main className="flex-1 bg-black px-6 py-16 text-[#F5F5DC]">

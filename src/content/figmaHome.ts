@@ -9,9 +9,8 @@ export const figmaHome = {
     tags: ["Craftsmanship", "Quality", "Timeless Design"],
     subhead:
       "Bringing new life to your cherished furniture with expert craftsmanship and attention to detail",
-    image:
-      "https://images.unsplash.com/photo-1759229874865-20a8c780c86b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB2ZWx2ZXQlMjBzb2ZhJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzc2MDQzMTIyfDA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=figma&utm_medium=referral",
-    imageAlt: "Luxury interior with upholstered sofa",
+    image: "/images/work/velvet-loveseat.webp",
+    imageAlt: "Custom gray velvet loveseat finished in the studio",
   },
   services: {
     kicker: "Our Services",
@@ -43,9 +42,9 @@ export const figmaHome = {
     kicker: "Our Work Speaks",
     intro: "Transformations that inspire",
     images: [
-      "https://images.unsplash.com/photo-1769843356632-7f22cdeadf13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aW50YWdlJTIwYXJtY2hhaXIlMjB1cGhvbHN0ZXJ5fGVufDF8fHx8MTc3NjA0MzEyMnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      "https://images.unsplash.com/photo-1716762260024-bc2238f971ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwbGVhdGhlciUyMGNoYWlyJTIwcmVzdG9yYXRpb258ZW58MXx8fHwxNzc2MDQzMTIzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      "https://images.unsplash.com/photo-1655149588765-eaef8567283c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzb2ZhJTIwcmV1cGhvbHN0ZXJ5fGVufDF8fHx8MTc3NjA0MzEyM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "/images/work/boucle-armchair.webp",
+      "/images/work/banquette-seating.webp",
+      "/images/work/oak-leather-bench.webp",
     ],
   },
   testimonials: {
