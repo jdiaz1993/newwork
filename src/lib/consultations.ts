@@ -64,7 +64,36 @@ function getSupabaseConfig() {
   if (!url || !key) {
     throw new Error("Supabase is not configured.");
   }
+
+  if (/publishable|anon/i.test(key)) {
+    throw new Error(
+      "SUPABASE_SERVICE_ROLE_KEY must be the service_role key from Supabase (Project Settings → API), not the publishable/anon key.",
+    );
+  }
+
   return { url: url.replace(/\/$/, ""), key };
+}
+
+async function supabaseFetch(url: string, init: RequestInit = {}): Promise<Response> {
+  const allowInsecureTls =
+    process.env.NODE_ENV !== "production" &&
+    process.env.SUPABASE_INSECURE_TLS === "true";
+
+  if (!allowInsecureTls) {
+    return fetch(url, init);
+  }
+
+  const previousTlsSetting = process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  try {
+    return await fetch(url, init);
+  } finally {
+    if (previousTlsSetting === undefined) {
+      delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+    } else {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = previousTlsSetting;
+    }
+  }
 }
 
 async function supabaseRequest<T>(
@@ -72,16 +101,27 @@ async function supabaseRequest<T>(
   init: RequestInit = {},
 ): Promise<T> {
   const { url, key } = getSupabaseConfig();
-  const response = await fetch(`${url}/rest/v1/${path}`, {
-    ...init,
-    headers: {
-      apikey: key,
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-      ...(init.headers ?? {}),
-    },
-    cache: "no-store",
-  });
+
+  let response: Response;
+  try {
+    response = await supabaseFetch(`${url}/rest/v1/${path}`, {
+      ...init,
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+        ...(init.headers ?? {}),
+      },
+      cache: "no-store",
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown fetch error";
+    const hint =
+      message.includes("unable to verify") || message.includes("certificate")
+        ? " On Windows, this is often a local SSL issue. For local dev only, add SUPABASE_INSECURE_TLS=true to .env.local and restart the dev server."
+        : "";
+    throw new Error(`Could not reach Supabase: ${message}.${hint}`);
+  }
 
   if (!response.ok) {
     const body = await response.text();

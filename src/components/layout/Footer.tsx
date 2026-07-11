@@ -76,7 +76,15 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border-subtle py-5 text-center text-xs tracking-wide text-cream-muted/80">
-        © {new Date().getFullYear()} {site.name}. Crafted with care.
+        ©{" "}
+        <Link
+          href="/admin"
+          className="transition-colors hover:text-cream-muted"
+          aria-label="Admin login"
+        >
+          {new Date().getFullYear()}
+        </Link>{" "}
+        {site.name}. Crafted with care.
       </div>
     </footer>
   );
