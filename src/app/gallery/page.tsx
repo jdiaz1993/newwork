@@ -19,15 +19,8 @@ export default function GalleryPage() {
             A portfolio of texture, tone, and tact.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream-muted sm:text-lg">
-            Replace imagery in{" "}
-            <code className="rounded bg-charcoal px-1.5 py-0.5 text-sm text-gold/90">
-              src/content/site.ts
-            </code>{" "}
-            — keep paths local under{" "}
-            <code className="rounded bg-charcoal px-1.5 py-0.5 text-sm text-gold/90">
-              public/images
-            </code>{" "}
-            for simplest deployment.
+            Selected residential, commercial, and restoration work from the
+            studio — each piece finished with care and attention to detail.
           </p>
         </div>
       </section>
