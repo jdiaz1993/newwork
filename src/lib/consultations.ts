@@ -1,6 +1,8 @@
 import Database from "better-sqlite3";
 import { mkdirSync } from "fs";
+import { request as httpsRequest } from "https";
 import { dirname, join } from "path";
+import { URL } from "url";
 
 export type ConsultationRequest = {
   id: number;
@@ -74,26 +76,78 @@ function getSupabaseConfig() {
   return { url: url.replace(/\/$/, ""), key };
 }
 
-async function supabaseFetch(url: string, init: RequestInit = {}): Promise<Response> {
-  const allowInsecureTls =
+function allowInsecureTls(): boolean {
+  return (
     process.env.NODE_ENV !== "production" &&
-    process.env.SUPABASE_INSECURE_TLS === "true";
+    process.env.SUPABASE_INSECURE_TLS === "true"
+  );
+}
 
-  if (!allowInsecureTls) {
-    return fetch(url, init);
+async function insecureHttpsFetch(
+  requestUrl: string,
+  init: RequestInit = {},
+): Promise<Response> {
+  const parsed = new URL(requestUrl);
+  const method = (init.method ?? "GET").toUpperCase();
+  const headers = new Headers(init.headers);
+  const body =
+    typeof init.body === "string"
+      ? init.body
+      : init.body
+        ? String(init.body)
+        : undefined;
+
+  if (body && !headers.has("content-length")) {
+    headers.set("content-length", Buffer.byteLength(body).toString());
   }
 
-  const previousTlsSetting = process.env.NODE_TLS_REJECT_UNAUTHORIZED;
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-  try {
-    return await fetch(url, init);
-  } finally {
-    if (previousTlsSetting === undefined) {
-      delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
-    } else {
-      process.env.NODE_TLS_REJECT_UNAUTHORIZED = previousTlsSetting;
-    }
+  return new Promise((resolve, reject) => {
+    const req = httpsRequest(
+      {
+        protocol: parsed.protocol,
+        hostname: parsed.hostname,
+        port: parsed.port || 443,
+        path: `${parsed.pathname}${parsed.search}`,
+        method,
+        headers: Object.fromEntries(headers.entries()),
+        rejectUnauthorized: false,
+      },
+      (res) => {
+        const chunks: Buffer[] = [];
+        res.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+        res.on("end", () => {
+          const responseHeaders = new Headers();
+          for (const [key, value] of Object.entries(res.headers)) {
+            if (value === undefined) continue;
+            if (Array.isArray(value)) {
+              for (const item of value) responseHeaders.append(key, item);
+            } else {
+              responseHeaders.set(key, value);
+            }
+          }
+
+          resolve(
+            new Response(Buffer.concat(chunks), {
+              status: res.statusCode ?? 500,
+              statusText: res.statusMessage,
+              headers: responseHeaders,
+            }),
+          );
+        });
+      },
+    );
+
+    req.on("error", reject);
+    if (body) req.write(body);
+    req.end();
+  });
+}
+
+async function supabaseFetch(url: string, init: RequestInit = {}): Promise<Response> {
+  if (allowInsecureTls()) {
+    return insecureHttpsFetch(url, init);
   }
+  return fetch(url, init);
 }
 
 async function supabaseRequest<T>(

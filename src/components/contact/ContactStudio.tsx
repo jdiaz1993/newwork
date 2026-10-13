@@ -4,6 +4,10 @@ import { Clock, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import { site } from "@/content/site";
 
+const fullAddress = `${site.addressLine1}, ${site.cityStateZip}`;
+const encodedAddress = encodeURIComponent(fullAddress);
+const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+
 export function ContactStudio() {
   const c = site.contactPage;
   const [name, setName] = useState("");
@@ -204,11 +208,16 @@ export function ContactStudio() {
                     </div>
                     <div>
                       <h4 className="mb-1 font-semibold">Location</h4>
-                      <p className="text-[#F5F5DC]/70">
+                      <a
+                        href={directionsUrl}
+                        className="text-[#F5F5DC]/70 transition hover:text-[#D4AF37]"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
                         {site.addressLine1}
                         <br />
                         {site.cityStateZip}
-                      </p>
+                      </a>
                     </div>
                   </div>
 
@@ -271,14 +280,30 @@ export function ContactStudio() {
 
       <section className="px-4 pb-16 sm:px-6 md:pb-24">
         <div className="mx-auto max-w-6xl">
-          <div className="flex h-72 items-center justify-center overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#1A1A1A] to-black sm:h-96">
-            <div className="text-center">
-              <MapPin className="mx-auto mb-4 h-16 w-16 text-[#D4AF37]" aria-hidden />
-              <p className="text-[#F5F5DC]/70">{c.mapLabel}</p>
-              <p className="mt-2 max-w-md px-4 text-xs text-[#F5F5DC]/40">
-                Embed Google Maps here later, or link to maps with your studio address.
-              </p>
-            </div>
+          <div className="relative h-72 overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-[#1A1A1A] sm:h-96">
+            <iframe
+              title={`Map to ${site.name}`}
+              src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
+              className="h-full w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+            <a
+              href={directionsUrl}
+              className="absolute inset-0"
+              rel="noreferrer"
+              target="_blank"
+              aria-label={`Get directions to ${fullAddress}`}
+            />
+            <a
+              href={directionsUrl}
+              className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8930A] px-6 py-3 text-sm font-semibold text-black shadow-lg transition hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <MapPin className="h-4 w-4" aria-hidden />
+              Get Directions
+            </a>
           </div>
         </div>
       </section>

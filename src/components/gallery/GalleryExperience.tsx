@@ -61,12 +61,14 @@ export function GalleryExperience({ items }: { items: readonly GalleryItem[] }) 
               onClick={() => setActive(item)}
               className="group relative block w-full overflow-hidden rounded-sm border border-border-subtle text-left transition hover:border-gold/35"
             >
-              <div className="relative aspect-[4/3]">
+              <div className="relative aspect-[4/3] bg-black">
                 <Image
                   src={item.src}
                   alt={item.alt}
                   fill
-                  className="object-cover transition duration-500 group-hover:scale-[1.02]"
+                  className={`${
+                    item.fit === "contain" ? "object-contain" : "object-cover"
+                  } transition duration-500 group-hover:scale-[1.02]`}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-charcoal/0 transition group-hover:bg-charcoal/25" />

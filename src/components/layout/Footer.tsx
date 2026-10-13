@@ -65,12 +65,12 @@ export function Footer() {
               Instagram
             </a>
             <a
-              href={site.social.pinterest}
+              href={site.social.yelp}
               className="border-b border-transparent pb-0.5 transition hover:border-gold hover:text-cream"
               rel="noreferrer"
               target="_blank"
             >
-              Pinterest
+              Yelp
             </a>
           </div>
         </div>

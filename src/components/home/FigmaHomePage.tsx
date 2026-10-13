@@ -172,8 +172,23 @@ export function FigmaHomePage() {
                 </div>
                 <p className="mb-6 italic text-[#F5F5DC]/80">&ldquo;{t.text}&rdquo;</p>
                 <p className="figma-font-serif font-semibold text-[#D4AF37]">— {t.name}</p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-[#F5F5DC]/50">
+                  via {testimonials.source}
+                </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <a
+              href={site.social.yelp}
+              className="inline-flex items-center gap-2 rounded-full border-2 border-[#D4AF37]/50 px-8 py-4 font-semibold text-[#D4AF37] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#D4AF37]/10"
+              rel="noreferrer"
+              target="_blank"
+            >
+              Read More Reviews on Yelp
+              <ArrowRight className="h-5 w-5" />
+            </a>
           </div>
         </div>
       </section>
